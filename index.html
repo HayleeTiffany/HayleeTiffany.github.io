@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Personal portfolio of a data scientist." />
+  <title>Haylee Tiffany — Data Scientist</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0f14;
+      --panel: #111821;
+      --panel-2: #151f2a;
+      --text: #edf2f7;
+      --muted: #98a6b5;
+      --accent: #79d4c2;
+      --accent-2: #b0eee1;
+      --line: rgba(214, 231, 241, .12);
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: var(--sans); line-height: 1.65;
+    }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .nav-wrap {
+      position: sticky; top: 0; z-index: 20; width: 100%;
+      background: rgba(11, 15, 20, .88); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .navbar {
+      max-width: 1120px; min-height: 74px; margin: auto; padding: 0 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { font: 700 15px var(--mono); letter-spacing: -.04em; }
+    .brand span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 8px; list-style: none; margin: 0; padding: 0; }
+    .nav-links > li { position: relative; }
+    .nav-link, .projects-toggle {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px;
+      border: 0; border-radius: 8px; background: transparent; color: var(--muted);
+      font: 500 13px var(--mono); cursor: pointer; transition: color .2s, background .2s;
+    }
+    .nav-link:hover, .projects-toggle:hover, .nav-link.active { color: var(--text); background: rgba(255,255,255,.055); }
+    .projects-toggle .chevron { color: var(--accent); transition: transform .2s; }
+    .has-dropdown:hover .chevron, .has-dropdown:focus-within .chevron, .has-dropdown.open .chevron { transform: rotate(180deg); }
+    .dropdown {
+      position: absolute; top: calc(100% + 12px); left: 0; min-width: 230px; padding: 8px;
+      background: #121b24; border: 1px solid var(--line); border-radius: 12px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.38); opacity: 0; visibility: hidden;
+      transform: translateY(7px); transition: .18s ease;
+    }
+    .has-dropdown:hover .dropdown, .has-dropdown:focus-within .dropdown, .has-dropdown.open .dropdown {
+      opacity: 1; visibility: visible; transform: translateY(0);
+    }
+    .dropdown a { display: block; padding: 10px 12px; border-radius: 7px; color: var(--muted); font: 12px var(--mono); }
+    .dropdown a:hover { color: var(--accent-2); background: rgba(121,212,194,.08); }
+    .dropdown small { display: block; margin-top: 2px; color: #718091; font: 11px var(--sans); }
+    .menu-button { display: none; border: 1px solid var(--line); background: var(--panel); color: var(--text); border-radius: 8px; padding: 8px 10px; font-size: 18px; }
+    main { max-width: 1120px; margin: auto; padding: 0 28px; }
+    .hero { min-height: 630px; display: grid; grid-template-columns: 1.35fr .65fr; align-items: center; gap: 60px; padding: 92px 0 100px; }
+    .eyebrow { color: var(--accent); font: 12px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 720px; margin: 20px 0 18px; font-size: clamp(42px, 6vw, 72px); line-height: 1.08; letter-spacing: -.065em; }
+    h1 .highlight { color: var(--accent); }
+    .type-line { min-height: 30px; color: var(--muted); font: 14px var(--mono); }
+    .type-line::after { content: "▍"; color: var(--accent); animation: blink 1s steps(2, start) infinite; }
+    @keyframes blink { to { visibility: hidden; } }
+    .intro { max-width: 630px; margin: 25px 0 30px; color: #aab6c3; font-size: 17px; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; padding: 12px 17px; border-radius: 8px; font: 12px var(--mono); transition: transform .2s, background .2s; }
+    .button:hover { transform: translateY(-2px); }
+    .primary { color: #08110f; background: var(--accent); font-weight: 700; }
+    .secondary { color: var(--text); border: 1px solid var(--line); }
+    .hero-card { position: relative; padding: 25px; background: linear-gradient(145deg, #17232d, #10171f); border: 1px solid var(--line); border-radius: 18px; }
+    .hero-card::before { content: ""; position: absolute; width: 100px; height: 100px; top: -20px; right: -20px; border-top: 1px solid var(--accent); border-right: 1px solid var(--accent); border-radius: 0 16px 0 0; opacity: .65; }
+    .card-label { color: var(--muted); font: 11px var(--mono); text-transform: uppercase; letter-spacing: .1em; }
+    .metric { margin: 14px 0 4px; font: 34px var(--mono); color: var(--accent); }
+    .metric-caption { color: var(--muted); font-size: 12px; }
+    .mini-rule { height: 1px; background: var(--line); margin: 22px 0; }
+    .stack { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+    .chip { padding: 6px 9px; border: 1px solid var(--line); border-radius: 5px; color: #b5c2ce; font: 10px var(--mono); }
+    section.content-section { padding: 78px 0; border-top: 1px solid var(--line); }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 30px; }
+    .section-heading h2 { margin: 8px 0 0; font-size: clamp(28px, 4vw, 40px); letter-spacing: -.05em; }
+    .section-note { max-width: 340px; color: var(--muted); font-size: 13px; }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .project-card { min-height: 245px; padding: 23px; display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--line); border-radius: 13px; transition: border-color .2s, transform .2s; }
+    .project-card:hover { transform: translateY(-4px); border-color: rgba(121,212,194,.55); }
+    .project-top { display: flex; justify-content: space-between; color: var(--accent); font: 11px var(--mono); }
+    .project-card h3 { margin: 22px 0 9px; font-size: 19px; letter-spacing: -.03em; }
+    .project-card p { margin: 0; color: var(--muted); font-size: 13px; }
+    .project-card .stack { margin-top: auto; padding-top: 22px; }
+    .about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; }
+    .about-grid h2 { margin: 8px 0; font-size: 38px; letter-spacing: -.05em; }
+    .about-copy { color: #aab6c3; font-size: 15px; }
+    .about-copy p:first-child { margin-top: 0; }
+    .detail-list { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 28px; }
+    .detail { padding-top: 13px; border-top: 1px solid var(--line); }
+    .detail strong { display: block; color: var(--text); font: 12px var(--mono); margin-bottom: 5px; }
+    .detail span { color: var(--muted); font-size: 12px; }
+    footer { border-top: 1px solid var(--line); }
+    .footer-inner { max-width: 1120px; margin: auto; padding: 36px 28px 42px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .footer-copy { color: #718091; font: 11px var(--mono); }
+    .socials { display: flex; gap: 20px; }
+    .socials a { color: var(--muted); font: 12px var(--mono); }
+    .socials a:hover { color: var(--accent); }
+    .project-detail { scroll-margin-top: 100px; }
+    @media (max-width: 760px) {
+      .navbar { min-height: 66px; padding: 0 20px; }
+      .menu-button { display: block; }
+      .nav-links { display: none; position: absolute; top: 66px; left: 0; right: 0; padding: 12px 20px 18px; flex-direction: column; align-items: stretch; background: #0e141b; border-bottom: 1px solid var(--line); }
+      .nav-links.mobile-open { display: flex; }
+      .nav-links > li { width: 100%; }
+      .nav-link, .projects-toggle { width: 100%; justify-content: space-between; }
+      .dropdown { position: static; display: none; min-width: 0; margin: 4px 0 8px; box-shadow: none; opacity: 1; visibility: visible; transform: none; }
+      .has-dropdown.open .dropdown { display: block; }
+      main { padding: 0 20px; }
+      .hero { min-height: 0; grid-template-columns: 1fr; gap: 35px; padding: 78px 0; }
+      .hero-card { max-width: 460px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card { min-height: 210px; }
+      .about-grid { grid-template-columns: 1fr; gap: 20px; }
+      section.content-section { padding: 60px 0; }
+      .section-heading { display: block; }
+      .section-note { margin-top: 12px; }
+      .footer-inner { padding: 30px 20px; align-items: flex-start; flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav-wrap">
+    <nav class="navbar" aria-label="Main navigation">
+      <a class="brand" href="#home">AM<span>.</span> / DATA</a>
+      <button class="menu-button" id="menuButton" aria-label="Open navigation menu" aria-expanded="false">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a class="nav-link active" href="#home">Home</a></li>
+        <li class="has-dropdown" id="projectsMenu">
+          <button class="projects-toggle" id="projectsToggle" aria-expanded="false" aria-haspopup="true">
+            Projects <span class="chevron">⌄</span>
+          </button>
+          <div class="dropdown" aria-label="Project pages">
+            <a href="#project-forecasting">01 / Forecasting <small>Predictive analytics</small></a>
+            <a href="#project-segmentation">02 / Segmentation <small>Customer insights</small></a>
+            <a href="#project-visualization">03 / Visualization <small>Data storytelling</small></a>
+          </div>
+        </li>
+        <li><a class="nav-link" href="#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div>
+        <div class="eyebrow">Data Scientist · Analyst · Problem Solver</div>
+        <h1>Turning complex data into <span class="highlight">clear decisions.</span></h1>
+        <div class="type-line" id="typeLine">I build thoughtful data products.</div>
+        <p class="intro">I'm Haylee Tiffany, a data scientist focused on finding the signal in the noise. I combine statistical thinking, machine learning, and clear communication to turn real-world questions into useful insights.</p>
+        <div class="actions">
+          <a class="button primary" href="#projects">Explore my work ↗</a>
+          <a class="button secondary" href="mailto:hello@example.com">Get in touch</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="Profile snapshot">
+        <div class="card-label">A little about my work</div>
+        <div class="metric">01<span style="font-size:18px;color:var(--muted)"> / 03</span></div>
+        <div class="metric-caption">Curiosity is the starting point.</div>
+        <div class="mini-rule"></div>
+        <div class="card-label">Tools in my workflow</div>
+        <div class="stack">
+          <span class="chip">Python</span><span class="chip">R</span><span class="chip">SQL</span>
+          <span class="chip">Pandas</span><span class="chip">Scikit-learn</span><span class="chip">Tableau</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="content-section" id="projects">
+      <div class="section-heading">
+        <div><div class="eyebrow">Selected work / 2024—2026</div><h2>Projects</h2></div>
+        <p class="section-note">A few examples of how I approach questions, build models, and communicate what the data is saying.</p>
+      </div>
+      <div class="projects-grid">
+        <article class="project-card project-detail" id="project-forecasting">
+          <div class="project-top"><span>01 — MACHINE LEARNING</span><span>↗</span></div>
+          <h3>Demand Forecasting</h3>
+          <p>Built a time-series workflow to identify demand patterns and create more reliable short-term forecasts.</p>
+          <div class="stack"><span class="chip">Python</span><span class="chip">Time Series</span><span class="chip">Pandas</span></div>
+        </article>
+        <article class="project-card project-detail" id="project-segmentation">
+          <div class="project-top"><span>02 — CUSTOMER ANALYTICS</span><span>↗</span></div>
+          <h3>Customer Segmentation</h3>
+          <p>Used exploratory analysis and clustering to reveal meaningful customer groups and behavior patterns.</p>
+          <div class="stack"><span class="chip">SQL</span><span class="chip">Clustering</span><span class="chip">Scikit-learn</span></div>
+        </article>
+        <article class="project-card project-detail" id="project-visualization">
+          <div class="project-top"><span>03 — DATA STORYTELLING</span><span>↗</span></div>
+          <h3>Interactive Insights</h3>
+          <p>Designed a clear, decision-focused dashboard that makes key performance trends easier to explore.</p>
+          <div class="stack"><span class="chip">Tableau</span><span class="chip">Visualization</span><span class="chip">Analytics</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section" id="about">
+      <div class="about-grid">
+        <div><div class="eyebrow">A bit more</div><h2>About me<span style="color:var(--accent)">.</span></h2></div>
+        <div class="about-copy">
+          <p>I enjoy working at the intersection of analytical rigor and practical impact. My process starts with understanding the problem, continues with careful exploration and modeling, and ends with results people can act on.</p>
+          <p>I'm always learning, asking better questions, and looking for opportunities to make data more accessible. If you're working on an interesting problem, I'd love to hear about it.</p>
+          <div class="detail-list">
+            <div class="detail"><strong>FOCUS</strong><span>Applied machine learning & statistics</span></div>
+            <div class="detail"><strong>APPROACH</strong><span>Curious, collaborative, evidence-led</span></div>
+            <div class="detail"><strong>BASED IN</strong><span>Your City, USA</span></div>
+            <div class="detail"><strong>OPEN TO</strong><span>Projects & opportunities</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-copy">© <span id="year"></span> HAYLEE TIFFANY · BUILT WITH CURIOSITY</div>
+      <div class="socials">
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a href="mailto:hello@example.com">Email ↗</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const navLinks = document.getElementById('navLinks');
+    const projectsMenu = document.getElementById('projectsMenu');
+    const projectsToggle = document.getElementById('projectsToggle');
+
+    menuButton.addEventListener('click', () => {
+      const open = navLinks.classList.toggle('mobile-open');
+      menuButton.setAttribute('aria-expanded', String(open));
+      menuButton.textContent = open ? '×' : '☰';
+    });
+
+    projectsToggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const open = projectsMenu.classList.toggle('open');
+      projectsToggle.setAttribute('aria-expanded', String(open));
+    });
+
+    document.querySelectorAll('.dropdown a, .nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        projectsMenu.classList.remove('open');
+        projectsToggle.setAttribute('aria-expanded', 'false');
+        navLinks.classList.remove('mobile-open');
+        menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.textContent = '☰';
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!projectsMenu.contains(event.target)) {
+        projectsMenu.classList.remove('open');
+        projectsToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    const phrases = ['I build thoughtful data products.', 'I turn questions into evidence.', 'I make insights easier to act on.'];
+    let phraseIndex = 0;
+    const typeLine = document.getElementById('typeLine');
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setInterval(() => {
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        typeLine.textContent = phrases[phraseIndex];
+      }, 2800);
+    }
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
